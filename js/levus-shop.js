@@ -68,7 +68,7 @@
 					checked.number++;
 				} else {
 
-					// push object with 3 items to array
+					// push object with 5 items to array
 					data.push(content);
 				}
 
@@ -151,6 +151,24 @@
 
 	// check #order-goods
 	if(document.querySelector('#order-goods')){
+
+		// table
+		const order = document.querySelector('#order-goods');
+
+		// view all ordered goods 
+		function view(){
+
+		}
+
+		// change quantity goods
+		function change(){
+
+		}
+
+		// remove goods
+		function remove(){
+
+		}
 
 	}
 }
