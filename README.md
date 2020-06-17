@@ -1,6 +1,6 @@
 # levus-basket
-javaScript кошик з можливістю додавати і видаляти зі сторінки товари
+javaScript кошик з можливістю додавати і видаляти зі сторінки товари.
+товари у кошикові суцмуються, а не множаться, як у levus-basket
+також є оформлення та редагування товарів на сторінці замовлення
 
-https://lvivduncan.github.io/levus-basket/
-
-(jquery варіант теж у наявності)
+https://lvivduncan.github.io/levus-shop/
