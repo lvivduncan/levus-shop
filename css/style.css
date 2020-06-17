@@ -1,0 +1,173 @@
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* /////////////
+кошик з товарами
+///////////// */
+#basket {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid lawngreen;
+  margin: 10px 10px 50px;
+}
+
+/* /////////////////
+обгортка для товарів 
+///////////////// */
+#items {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+@media(max-width: 1200px) {
+  #items {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media(max-width: 991px) {
+  #items {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media(max-width: 776px) {
+  #items {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media(max-width: 550px) {
+  #items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 450px) {
+  #items {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* //
+товар
+// */
+.item {
+  padding: 10px;
+  border: 1px solid rosybrown;
+}
+
+.item figure{
+  text-align: center;
+}
+
+.item figcaption{
+  text-align: center;
+}
+
+/* ціна */
+.price {
+  margin: 5px 0;
+}
+
+.price::before {
+  content: 'ціна: ';
+  font-style: italic;
+}
+
+.price::after {
+  content: ' грн';
+}
+
+/* розмір */
+.size{
+  margin: 5px 0;
+}
+
+.size::before{
+  content: 'розмір: ';
+  font-style: italic;
+}
+
+.button{
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px 0;
+  display: inline-block;
+}
+
+/* ////////////////
+оформити замовлення
+//////////////// */
+#basket-order {
+  cursor: pointer;
+}
+
+/* ///////////
+очистити кошик
+/////////// */
+#basket-clear {
+  cursor: pointer;
+}
+
+/* ///////////////////////
+виводимо товари у кошикові
+/////////////////////// */
+#basket-goods p{
+  margin: 5px 0;
+}
+
+/* ////////////////////
+кнопка видалення товару
+//////////////////// */
+#basket i {
+  display: inline-block;
+  position: relative;
+  width: 12px;
+  height: 12px;
+  top: 6px;
+  cursor: pointer;
+}
+
+#basket i::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: maroon;
+  -webkit-transform: rotate(50deg);
+  transform: rotate(50deg);
+}
+
+#basket i::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: maroon;
+  -webkit-transform: rotate(-50deg);
+  transform: rotate(-50deg);
+}
+
+/* //////////////////
+оформлення замовлення
+////////////////// */
+#order-goods{
+  width: 900px;
+  margin: auto;
+  padding: 10px;
+  border: 1px sodid gray;
+}
