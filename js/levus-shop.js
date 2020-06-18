@@ -117,14 +117,7 @@
 			} else {
 				selected.innerHTML =
 					JSON.parse(localStorage.getItem('basket'))
-						.reduce((sum, item, i) => sum + `
-							<p data-id="${i}">
-								<i></i> 
-								${item.name} 
-								[${item.number}]: 
-								${item.size} - 
-								${item.price}грн
-							</p>`, '');
+						.reduce((sum, item, i) => sum + `<p data-id="${i}"><i></i> ${item.name} [${item.number}]: ${item.size} - ${item.price}грн</p>`, '');
 			}
 		}
 
@@ -178,16 +171,7 @@
 				order.innerHTML =
 					JSON.parse(localStorage.getItem('basket'))
 						.reduce((sum, item, i) => sum + `
-							<p data-id="${i}">
-								<img src="${item.img}" alt="">
-								<i></i>
-								<b>${item.name}</b>
-								<span>${item.size} </span>
-								<span><b>${item.price}</b>грн </span>
-								<span class="minus"></span>
-								<span class="number">${item.number}</span>
-								<span class="plus"></span>
-							</p>`, '');
+							<p data-id="${i}"><img src="${item.img}" alt=""><i></i><b>${item.name}</b><span>${item.size} </span><span><b>${item.price}</b>грн </span><span class="minus"></span><span class="number">${item.number}</span><span class="plus"></span></p>`, '');
 			}
 		}
 
@@ -214,12 +198,14 @@
 				}
 			} else if (e.target.className === 'minus') {
 				if (data[id].number > 1) {
+					// remove 1
 					data[id].number--;
 				} else {
 					// remove item
 					data.splice(id, 1);
 				}
 			} else if (e.target.className === 'plus') {
+				// add 1
 				data[id].number++;
 			}
 
