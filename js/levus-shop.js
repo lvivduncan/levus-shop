@@ -165,12 +165,13 @@
 		const sum = document.querySelector('#order-sum');
 
 		// delete goods one by one
-		order.addEventListener('click', e => change(e));
+		order.addEventListener('click', e => changeGoods(e));
 
-		view();
+		viewGoods();
+		viewSum();
 
 		// view all ordered goods 
-		function view() {
+		function viewGoods() {
 			if (localStorage.getItem('basket') === null) {
 				order.innerHTML = '';
 			} else {
@@ -191,7 +192,7 @@
 		}
 
 		// change quantity goods
-		function change(e) {
+		function changeGoods(e) {
 
 			// id goods
 			const id = e.target.parentNode.dataset.id;
@@ -226,7 +227,7 @@
 			localStorage.setItem('basket', JSON.stringify(data));
 
 			// reload
-			view();
+			viewGoods();
 			viewSum();
 		}
 
