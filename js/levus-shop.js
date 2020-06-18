@@ -1,4 +1,4 @@
-// basket.js 17-06-2020
+// basket.js 18-06-2020
 {
 	// check basket
 	if (document.querySelector('#basket')) {
