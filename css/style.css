@@ -64,11 +64,11 @@
   border: 1px solid rosybrown;
 }
 
-.item figure{
+.item figure {
   text-align: center;
 }
 
-.item figcaption{
+.item figcaption {
   text-align: center;
 }
 
@@ -87,16 +87,16 @@
 }
 
 /* розмір */
-.size{
+.size {
   margin: 5px 0;
 }
 
-.size::before{
+.size::before {
   content: 'розмір: ';
   font-style: italic;
 }
 
-.button{
+.button {
   cursor: pointer;
   padding: 5px;
   margin: 5px 0;
@@ -120,7 +120,7 @@
 /* ///////////////////////
 виводимо товари у кошикові
 /////////////////////// */
-#basket-goods p{
+#basket-goods p {
   margin: 5px 0;
 }
 
@@ -165,9 +165,106 @@
 /* //////////////////
 оформлення замовлення
 ////////////////// */
-#order-goods{
-  width: 900px;
-  margin: auto;
+#order-goods {
+  width: 600px;
+  margin: 100px auto 10px;
   padding: 10px;
-  border: 1px sodid gray;
+  /* border: 1px solid yellowgreen; */
+}
+
+#order-goods p {
+  padding: 20px 5px;
+  display: grid;
+  grid-template-columns: 36px 20px repeat(3,1fr) repeat(3,auto);
+  align-items: center;
+}
+
+#order-goods p:nth-child(even){
+  background: #e6e6e6;
+}
+
+#order-goods img{
+  width: 36px;
+}
+
+#order-goods b {
+  text-transform: uppercase;
+}
+
+#order-goods p i {
+  display: inline-block;
+  position: relative;
+  width: 12px;
+  height: 12px;
+  top: 4px;
+  cursor: pointer;
+}
+
+#order-goods p i::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: maroon;
+  -webkit-transform: rotate(50deg);
+  transform: rotate(50deg);
+}
+
+#order-goods p i::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: maroon;
+  -webkit-transform: rotate(-50deg);
+  transform: rotate(-50deg);
+}
+
+/* кнопки та кількість товарів */
+#order-goods p span {
+  display: inline-block;
+}
+
+/* кількість */
+#order-goods .number{
+  color: darkolivegreen;
+  outline: 1px solid darkolivegreen;
+  min-width: 30px;
+  padding: 3px;
+  text-align: center;
+}
+
+/* кнопки +- */
+#order-goods .minus,
+#order-goods .plus {
+  position: relative;
+  /* top: 6px; */
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+#order-goods .minus::before,
+#order-goods .plus::before,
+#order-goods .plus::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  width: 12px;
+  height: 3px;
+  background: maroon;
+}
+
+#order-goods .plus::after {
+  content: '';
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }

@@ -117,7 +117,14 @@
 			} else {
 				selected.innerHTML =
 					JSON.parse(localStorage.getItem('basket'))
-						.reduce((sum, item, i) => sum + `<p><i data-id="${i}"></i> ${item.name} [${item.number}]: ${item.size} - ${item.price}грн</p>`, '');
+						.reduce((sum, item, i) => sum + `
+							<p data-id="${i}">
+								<i></i> 
+								${item.name} 
+								[${item.number}]: 
+								${item.size} - 
+								${item.price}грн
+							</p>`, '');
 			}
 		}
 
@@ -126,7 +133,7 @@
 			if (e.target.tagName === 'I') {
 
 				// id goods
-				const id = e.target.dataset.id;
+				const id = e.target.parentNode.dataset.id;
 
 				// goods from storage
 				const data = JSON.parse(localStorage.getItem('basket'));
@@ -150,25 +157,74 @@
 	}
 
 	// check #order-goods
-	if(document.querySelector('#order-goods')){
+	if (document.querySelector('#order-goods')) {
 
 		// table
 		const order = document.querySelector('#order-goods');
 
-		// view all ordered goods 
-		function view(){
+		// delete goods one by one
+		order.addEventListener('click', e => change(e));
 
+		view();
+
+		// view all ordered goods 
+		function view() {
+			if (localStorage.getItem('basket') === null) {
+				order.innerHTML = '';
+			} else {
+				order.innerHTML =
+					JSON.parse(localStorage.getItem('basket'))
+						.reduce((sum, item, i) => sum + `
+							<p data-id="${i}">
+								<img src="${item.img}" alt="">
+								<i></i>
+								<b>${item.name}</b>
+								<span>${item.size} </span>
+								<span><b>${item.price}</b>грн </span>
+								<span class="minus"></span>
+								<span class="number">${item.number}</span>
+								<span class="plus"></span>
+							</p>`, '');
+			}
 		}
 
 		// change quantity goods
-		function change(){
+		function change(e) {
 
+			// id goods
+			const id = e.target.parentNode.dataset.id;
+
+			// goods from storage
+			const data = JSON.parse(localStorage.getItem('basket'));
+
+			// to delete
+			if (e.target.tagName === 'I') {
+
+				// remove item
+				data.splice(id, 1);
+
+				// claer storage or return data to localStorage
+				if (data.length === 0) {
+					localStorage.removeItem('basket');
+				} else {
+					localStorage.setItem('basket', JSON.stringify(data));
+				}
+			} else if (e.target.className === 'minus') {
+				if (data[id].number > 1) {
+					data[id].number--;
+				} else {
+					// remove item
+					data.splice(id, 1);
+				}
+			} else if (e.target.className === 'plus') {
+				data[id].number++;
+			}
+
+			// return data to localStorage
+			localStorage.setItem('basket', JSON.stringify(data));
+
+			// reload
+			view();
 		}
-
-		// remove goods
-		function remove(){
-
-		}
-
 	}
 }
