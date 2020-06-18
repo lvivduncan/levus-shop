@@ -212,6 +212,11 @@
 			// return data to localStorage
 			localStorage.setItem('basket', JSON.stringify(data));
 
+			// check localStorage
+			if (localStorage.getItem('basket').length < 3) {
+				localStorage.clear('basket');
+			}
+
 			// reload
 			viewGoods();
 			viewSum();
@@ -220,9 +225,10 @@
 		// return sum
 		function viewSum() {
 			if (localStorage.getItem('basket') === null) {
-				sum.innerHTML = 0;
+				sum.style.display = 'none';
 			} else {
 				sum.innerHTML = JSON.parse(localStorage.getItem('basket')).map(item => item.price * item.number).reduce((sum, item) => sum + +item, 0) + 'грн';
+				sum.style.display = 'block';
 			}
 		}
 
