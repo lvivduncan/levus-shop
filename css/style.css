@@ -169,7 +169,6 @@
   width: 600px;
   margin: 100px auto 10px;
   padding: 10px;
-  /* border: 1px solid yellowgreen; */
 }
 
 #order-goods p {
@@ -244,7 +243,6 @@
 #order-goods .minus,
 #order-goods .plus {
   position: relative;
-  /* top: 6px; */
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -267,4 +265,12 @@
   content: '';
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
+}
+
+/**/
+#order-sum{
+  width: 600px;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
 }

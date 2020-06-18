@@ -162,6 +162,8 @@
 		// table
 		const order = document.querySelector('#order-goods');
 
+		const sum = document.querySelector('#order-sum');
+
 		// delete goods one by one
 		order.addEventListener('click', e => change(e));
 
@@ -225,6 +227,17 @@
 
 			// reload
 			view();
+			viewSum();
 		}
+
+		// return sum
+		function viewSum() {
+			if (localStorage.getItem('basket') === null) {
+				sum.innerHTML = 0;
+			} else {
+				sum.innerHTML = JSON.parse(localStorage.getItem('basket')).map(item => item.price * item.number).reduce((sum, item) => sum + +item, 0) + 'грн';
+			}
+		}
+
 	}
 }
