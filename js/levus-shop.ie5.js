@@ -1,7 +1,7 @@
 "use strict";
 
 // basket.js 17-06-2020
-{
+(function(){
   // check basket
   if (document.querySelector('#basket')) {
     // add to localStorage
@@ -30,7 +30,6 @@
         // load data from localStorage
         var _data = JSON.parse(localStorage.getItem('basket')); // new name 
 
-
         var name = this.dataset.name;
 
         if (_data.find(function (item) {
@@ -41,13 +40,11 @@
             return item.name === name;
           }); // add 1
 
-
           checked.number++;
         } else {
           // push object with 5 items to array
           _data.push(content);
         } // add data to localStorage
-
 
         localStorage.setItem('basket', JSON.stringify(_data)); // reload 
 
@@ -56,7 +53,6 @@
         viewSelected();
       }
     }; // return quantity goods
-
 
     var viewQuantity = function viewQuantity() {
       if (localStorage.getItem('basket') === null) {
@@ -67,7 +63,6 @@
         }, 0);
       }
     }; // return sum
-
 
     var viewSum = function viewSum() {
       if (localStorage.getItem('basket') === null) {
@@ -81,7 +76,6 @@
       }
     }; // clear localStorage
 
-
     var clearStorage = function clearStorage() {
       localStorage.clear('basket'); // reload
 
@@ -89,7 +83,6 @@
       viewQuantity();
       viewSelected();
     }; // view selected goods
-
 
     var viewSelected = function viewSelected() {
       if (localStorage.getItem('basket') === null) {
@@ -100,7 +93,6 @@
         }, '');
       }
     }; // delete goods from basket
-
 
     var removeGoods = function removeGoods(e) {
       if (e.target.tagName === 'I') {
@@ -116,7 +108,6 @@
         } else {
           localStorage.setItem('basket', JSON.stringify(data));
         } // reload
-
 
         viewSum();
         viewQuantity();
@@ -148,7 +139,6 @@
     viewSelected();
   } // check #order-goods
 
-
   if (document.querySelector('#order-goods')) {
     // view all ordered goods 
     var viewGoods = function viewGoods() {
@@ -160,7 +150,6 @@
         }, '');
       }
     }; // change quantity goods
-
 
     var changeGoods = function changeGoods(e) {
       // id goods
@@ -188,14 +177,12 @@
         data[id].number++;
       } // return data to localStorage
 
-
       localStorage.setItem('basket', JSON.stringify(data)); // reload
 
       viewGoods();
 
       _viewSum();
     }; // return sum
-
 
     var _viewSum = function _viewSum() {
       if (localStorage.getItem('basket') === null) {
@@ -214,7 +201,6 @@
 
     var _sum = document.querySelector('#order-sum'); // delete goods one by one
 
-
     order.addEventListener('click', function (e) {
       return changeGoods(e);
     });
@@ -222,4 +208,4 @@
 
     _viewSum();
   }
-}
+})();
