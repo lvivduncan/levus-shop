@@ -7,16 +7,29 @@ const BASKET = 'basket';
 class Basket {
 
   static getQuantity() {
-    return document.querySelector('#basket-quantity');
+		return document.querySelector('#basket-quantity');
   }
 
   static getSum() {
-    return document.querySelector('#basket-sum');
+		return document.querySelector('#basket-sum');
   }
 
   static getGoods() {
-    return document.querySelector('#basket-goods');
-  }
+		return document.querySelector('#basket-goods');
+	}
+	
+	// 1 метод, який оновлює дані у кошикові
+	static reload(){
+		if (Storage.has()) {
+			Basket.getQuantity().innerHTML = 999;
+			Basket.getSum().innerHTML = 999;
+			Basket.getGoods().innerHTML = 999;
+		}else{
+			Basket.getQuantity().innerHTML = 0;
+			Basket.getSum().innerHTML = 0;
+			Basket.getGoods().innerHTML = 0;			
+		}
+	}
 }
 
 // клас, який опрацьовує товари на сторінці
@@ -34,7 +47,9 @@ class Items {
       Storage.add(content);
     } else {
       Storage.set(content);
-    }
+		}
+		
+		Basket.reload();
   }
 }
 
