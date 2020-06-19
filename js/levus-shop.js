@@ -87,7 +87,12 @@ class Storage {
     data.push(value);
     // повертаємо у сховище оновлений масив
     localStorage.setItem(BASKET, JSON.stringify(data));
-  }
+	}
+	
+	// очистка сховища
+	static clear(){
+		localStorage.clear(BASKET);
+	}
 }
 
 // клік на кнопці "button"
