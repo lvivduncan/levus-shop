@@ -81,7 +81,6 @@ class Items {
 		if (Storage.has()) {
 			Storage.add(content);
 		} else {
-			// todo - перевірка, чи то не такий самий товар і тоді збільшувати на 1
 			Storage.set(content);
 		}
 
@@ -148,6 +147,11 @@ class Storage {
 			localStorage.setItem(BASKET, JSON.stringify(data));
 		}
 	}
+
+}
+
+// оформлення замовлення
+class Checkout{
 
 }
 
