@@ -35,6 +35,17 @@ class Basket {
 		return Storage.get().reduce((sum, item, i) => sum += `<p data-id="${i}"><i></i><b>${item.name}</b>, ${item.size}: ${item.price}, ${item.number}</p>`, '');
 	}
 
+	// видаляємо товари
+	static removeGoods(e){
+		if (e.target.tagName === 'I'){
+			const id = e.target.parentNode.dataset.id;
+			
+			Storage.remove(id);
+			Basket.reload();
+		}
+	}
+
+	// очистка кошика
 	static clearBasket() {
 		Storage.clear();
 		Basket.getQuantity().innerHTML = 0;
@@ -124,6 +135,20 @@ class Storage {
 	static clear() {
 		localStorage.clear(BASKET);
 	}
+
+	// видаляємо товар
+	static remove(id){
+		const data = JSON.parse(localStorage.getItem(BASKET));
+
+		data.splice(id, 1);
+
+		if (data.length === 0) {
+			localStorage.removeItem(BASKET);
+		} else {
+			localStorage.setItem(BASKET, JSON.stringify(data));
+		}
+	}
+
 }
 
 // клік на кнопці "button"
@@ -132,4 +157,8 @@ Items.getItems().forEach(item => item.addEventListener('click', Items.toBasket))
 // очистити кошик
 Basket.getClear().addEventListener('click', Basket.clearBasket);
 
+// оновлюємо кошик при завантаженні сторінки
 Basket.reload();
+
+// видаляємо товари з кошика
+Basket.getGoods().addEventListener('click', Basket.removeGoods)
