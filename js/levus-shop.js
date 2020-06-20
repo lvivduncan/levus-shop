@@ -42,6 +42,7 @@ class Basket {
 
 			Storage.remove(id);
 			Basket.reload();
+			Checkout.reload();
 		}
 	}
 
@@ -171,21 +172,23 @@ class Checkout {
 			const data = Storage.get()
 				.reduce((sum, item, i) => sum + `
 					<div data-id="${i}" class="product">
-					<div class="product-img"><img src="${item.img}" alt=""></div>
-					<div class="product-name">${item.name}</div>
-					<div class="product-size">${item.size}</div>
-					<div class="product-price">
-					<small>${item.price}грн</small> 
-					<p>${item.price * item.number}грн</p>
-					</div>
-					<div class="product-quantity">
-					<span class="minus"></span>
-					<span class="number">${item.number}</span>
-					<span class="plus"></span>
-					</div>
-					<div class="product-delete">
-					<i></i>
-					</div>									
+						<div class="product-img">
+							<img src="${item.img}" alt="">
+						</div>
+						<div class="product-name">${item.name}</div>
+						<div class="product-size">${item.size}</div>
+						<div class="product-price">
+							<small>${item.price}грн</small> 
+							<p>${item.price * item.number}грн</p>
+						</div>
+						<div class="product-quantity">
+							<span class="minus"></span>
+							<span class="number">${item.number}</span>
+							<span class="plus"></span>
+						</div>
+						<div class="product-delete">
+							<i></i>
+						</div>									
 					</div>`, ''); // todo: delete 'грн'
 			return data;
 		}
@@ -248,5 +251,5 @@ Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGo
 // сторінка оформлення замволення
 Checkout.reload();
 
-// видаляємо/видаляємо кількість
+// видаляємо/змінюємо кількість
 Checkout.getOrderGoods().addEventListener('click', e => Checkout.changeGoods(e));
