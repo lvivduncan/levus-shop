@@ -55,14 +55,17 @@ class Basket {
 
 	// 1 метод, який оновлює дані у кошикові
 	static reload() {
-		if (Storage.has()) {
-			Basket.getQuantity().innerHTML = Basket.viewQuantity();
-			Basket.getSum().innerHTML = Basket.viewSum();
-			Basket.getGoods().innerHTML = Basket.viewGoods();
-		} else {
-			Basket.getQuantity().innerHTML = 0;
-			Basket.getSum().innerHTML = 0;
-			Basket.getGoods().innerHTML = '';
+		// перевірка чи існує кошик =)
+		if(Basket.getQuantity()){
+			if (Storage.has()) {
+				Basket.getQuantity().innerHTML = Basket.viewQuantity();
+				Basket.getSum().innerHTML = Basket.viewSum();
+				Basket.getGoods().innerHTML = Basket.viewGoods();
+			} else {
+				Basket.getQuantity().innerHTML = 0;
+				Basket.getSum().innerHTML = 0;
+				Basket.getGoods().innerHTML = '';
+			}
 		}
 	}
 }
@@ -212,14 +215,14 @@ class Checkout {
 // клік на кнопці "button"
 Items.getItems().forEach(item => item.addEventListener('click', Items.toBasket));
 
-// очистити кошик
-Basket.getClear().addEventListener('click', Basket.clearBasket);
+// очистити кошик, якщо кнопка очистки існує =)
+Basket.getClear() && Basket.getClear().addEventListener('click', Basket.clearBasket);
 
 // оновлюємо кошик при завантаженні сторінки
 Basket.reload();
 
 // видаляємо товари з кошика
-Basket.getGoods().addEventListener('click', Basket.removeGoods)
+Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGoods)
 
 // сторінка оформлення замволення
 Checkout.reload();
