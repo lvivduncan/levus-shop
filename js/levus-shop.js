@@ -1,4 +1,4 @@
-// 19-06-2020 
+// 20-06-2020 
 
 // назва сховища
 const BASKET = 'basket';
@@ -49,6 +49,7 @@ class Basket {
 	// очистка кошика
 	static clearBasket() {
 		Storage.clear();
+		Checkout.reload();
 		Basket.getQuantity().innerHTML = 0;
 		Basket.getSum().innerHTML = 0;
 		Basket.getGoods().innerHTML = '';
