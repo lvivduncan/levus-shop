@@ -56,7 +56,7 @@ class Basket {
 	// 1 метод, який оновлює дані у кошикові
 	static reload() {
 		// перевірка чи існує кошик =)
-		if(Basket.getQuantity()){
+		if (Basket.getQuantity()) {
 			if (Storage.has()) {
 				Basket.getQuantity().innerHTML = Basket.viewQuantity();
 				Basket.getSum().innerHTML = Basket.viewSum();
@@ -109,12 +109,13 @@ class Storage {
 
 	// надсилаємо дані
 	static set(value) {
-		// масив для сховища
-		const data = [];
-		// додали дані
-		data.push(value);
-		// надсилаємо у сховище
-		localStorage.setItem(BASKET, JSON.stringify(data));
+		if (Array.isArray(value)) {
+			localStorage.setItem(BASKET, JSON.stringify(value));
+		} else {
+			const data = [];
+			data.push(value);
+			localStorage.setItem(BASKET, JSON.stringify(data));
+		}
 	}
 
 	// додаємо дані
@@ -196,6 +197,26 @@ class Checkout {
 		}
 	}
 
+	// метод для роботи з оформленням товарів: видалення і зміна кілкості
+	static changeGoods(e) {
+		const id = e.target.parentNode.parentNode.dataset.id;
+
+		const data = Storage.get();
+
+		if (e.target.tagName === 'I') {
+			data.splice(id, 1);
+			data.length === 0 ? Storage.clear() : Storage.set(data);
+		} else if (e.target.className === 'minus') {
+			data[id].number > 1 ? data[id].number-- : data.splice(id, 1);
+		} else if (e.target.className === 'plus') {
+			data[id].number++;
+		}
+
+		Storage.set(data);
+		Checkout.reload();
+		Basket.reload();
+	}
+
 	// 1 метод, який оновлює дані 
 	static reload() {
 		// якщо не на сторінці оформлення, щоб не було помилки
@@ -226,3 +247,6 @@ Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGo
 
 // сторінка оформлення замволення
 Checkout.reload();
+
+// видаляємо/видаляємо кількість
+Checkout.getOrderGoods().addEventListener('click', e => Checkout.changeGoods(e));
