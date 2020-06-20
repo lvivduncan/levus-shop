@@ -1,4 +1,4 @@
-// 20-06-2020 
+// 20-06-2020
 "use strict";
 
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return !!right[Symbol.hasInstance](left); } else { return left instanceof right; } }
@@ -11,7 +11,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var BASKET = 'basket';
 
-var Basket = /*#__PURE__*/function () {
+var Basket = function () {
   function Basket() {
     _classCallCheck(this, Basket);
   }
@@ -74,10 +74,11 @@ var Basket = /*#__PURE__*/function () {
     key: "clearBasket",
     value: function clearBasket() {
       Storage.clear();
+      Checkout.reload();
       Basket.getQuantity().innerHTML = 0;
       Basket.getSum().innerHTML = 0;
       Basket.getGoods().innerHTML = '';
-    } 
+    }
 
   }, {
     key: "reload",
@@ -99,7 +100,8 @@ var Basket = /*#__PURE__*/function () {
   return Basket;
 }();
 
-var Items = /*#__PURE__*/function () {
+
+var Items = function () {
   function Items() {
     _classCallCheck(this, Items);
   }
@@ -133,7 +135,8 @@ var Items = /*#__PURE__*/function () {
   return Items;
 }();
 
-var Storage = /*#__PURE__*/function () {
+
+var Storage = function () {
   function Storage() {
     _classCallCheck(this, Storage);
   }
@@ -146,13 +149,13 @@ var Storage = /*#__PURE__*/function () {
       } else {
         return false;
       }
-    } 
+    }
 
   }, {
     key: "get",
     value: function get() {
       return JSON.parse(localStorage.getItem(BASKET));
-    } 
+    }
 
   }, {
     key: "set",
@@ -164,7 +167,7 @@ var Storage = /*#__PURE__*/function () {
         data.push(value);
         localStorage.setItem(BASKET, JSON.stringify(data));
       }
-    } 
+    }
 
   }, {
     key: "add",
@@ -182,14 +185,15 @@ var Storage = /*#__PURE__*/function () {
         data.push(value);
       }
 
+
       localStorage.setItem(BASKET, JSON.stringify(data));
-    } 
+    }
 
   }, {
     key: "clear",
     value: function clear() {
       localStorage.clear(BASKET);
-    } 
+    }
 
   }, {
     key: "remove",
@@ -208,7 +212,8 @@ var Storage = /*#__PURE__*/function () {
   return Storage;
 }();
 
-var Checkout = /*#__PURE__*/function () {
+
+var Checkout = function () {
   function Checkout() {
     _classCallCheck(this, Checkout);
   }
@@ -222,14 +227,14 @@ var Checkout = /*#__PURE__*/function () {
     key: "getOrderSum",
     value: function getOrderSum() {
       return document.querySelector('#order-sum');
-    } 
+    }
 
   }, {
     key: "viewGoods",
     value: function viewGoods() {
       if (Storage.has()) {
         var data = Storage.get().reduce(function (sum, item, i) {
-          return sum + "<div data-id=\"".concat(i, "\" class=\"product\"><div class=\"product-img\"><img src=\"").concat(item.img, "\" alt=\"\"></div><div class=\"product-name\">").concat(item.name, "</div><div class=\"product-size\">").concat(item.size, "</div><div class=\"product-price\"><small>").concat(item.price, "\u0433\u0440\u043D</small> <p>").concat(item.price * item.number, "\u0433\u0440\u043D</p></div><div class=\"product-quantity\"><span class=\"minus\"></span><span class=\"number\">").concat(item.number, "</span><span class=\"plus\"></span></div><div class=\"product-delete\"><i></i></div></div>");
+          return sum + "<div data-id=\"".concat(i, "\" class=\"product\"><div class=\"product-img\"><img src=\"").concat(item.img, "\" alt=\"\"></div><div class=\"product-name\">").concat(item.name, "</div><div class=\"product-size\">").concat(item.size, "</div><div class=\"product-price\"><small>").concat(item.price, "\u0433\u0440\u043D</small><p>").concat(item.price * item.number, "\u0433\u0440\u043D</p></div><div class=\"product-quantity\"><span class=\"minus\"></span><span class=\"number\">").concat(item.number, "</span><span class=\"plus\"></span></div><div class=\"product-delete\"><i></i></div></div>");
         }, ''); // todo: delete 'грн'
 
         return data;
@@ -245,7 +250,7 @@ var Checkout = /*#__PURE__*/function () {
           return sum + +item;
         }, 0);
       }
-    } 
+    }
 
   }, {
     key: "changeGoods",
@@ -265,7 +270,7 @@ var Checkout = /*#__PURE__*/function () {
       Storage.set(data);
       Checkout.reload();
       Basket.reload();
-    } 
+    }
 
   }, {
     key: "reload",
@@ -288,13 +293,13 @@ var Checkout = /*#__PURE__*/function () {
 
 Items.getItems().forEach(function (item) {
   return item.addEventListener('click', Items.toBasket);
-}); 
+});
 
 Basket.getClear() && Basket.getClear().addEventListener('click', Basket.clearBasket);
 
 Basket.reload();
 
-Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGoods);
+Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGoods); // сторінка оформлення замволення
 
 Checkout.reload();
 
