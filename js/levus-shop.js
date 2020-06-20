@@ -36,10 +36,10 @@ class Basket {
 	}
 
 	// видаляємо товари
-	static removeGoods(e){
-		if (e.target.tagName === 'I'){
+	static removeGoods(e) {
+		if (e.target.tagName === 'I') {
 			const id = e.target.parentNode.dataset.id;
-			
+
 			Storage.remove(id);
 			Basket.reload();
 		}
@@ -136,7 +136,7 @@ class Storage {
 	}
 
 	// видаляємо товар
-	static remove(id){
+	static remove(id) {
 		const data = JSON.parse(localStorage.getItem(BASKET));
 
 		data.splice(id, 1);
@@ -151,7 +151,61 @@ class Storage {
 }
 
 // оформлення замовлення
-class Checkout{
+class Checkout {
+
+	static getOrderGoods() {
+		return document.querySelector('#order-goods');
+	}
+
+	static getOrderSum() {
+		return document.querySelector('#order-sum');
+	}
+
+	// виводимо дані
+	static viewGoods() {
+		if (Storage.has()) {
+			const data = Storage.get()
+				.reduce((sum, item, i) => sum + `
+					<div data-id="${i}" class="product">
+					<div class="product-img"><img src="${item.img}" alt=""></div>
+					<div class="product-name">${item.name}</div>
+					<div class="product-size">${item.size}</div>
+					<div class="product-price">
+					<small>${item.price}грн</small> 
+					<p>${item.price * item.number}грн</p>
+					</div>
+					<div class="product-quantity">
+					<span class="minus"></span>
+					<span class="number">${item.number}</span>
+					<span class="plus"></span>
+					</div>
+					<div class="product-delete">
+					<i></i>
+					</div>									
+					</div>`, ''); // todo: delete 'грн'
+			return data;
+		}
+	}
+
+	static viewSum() {
+		if (Storage.has()) {
+			return Storage.get().map(item => item.price * item.number).reduce((sum, item) => sum + +item, 0);
+		}
+	}
+
+	// 1 метод, який оновлює дані 
+	static reload() {
+		// якщо не на сторінці оформлення, щоб не було помилки
+		if (Checkout.getOrderGoods() !== null) {
+			if (Storage.has()) {
+				Checkout.getOrderGoods().innerHTML = Checkout.viewGoods();
+				Checkout.getOrderSum().innerHTML = Checkout.viewSum();
+			} else {
+				Checkout.getOrderGoods().innerHTML = '';
+				Checkout.getOrderSum().innerHTML = '';
+			}
+		}
+	}
 
 }
 
@@ -166,3 +220,6 @@ Basket.reload();
 
 // видаляємо товари з кошика
 Basket.getGoods().addEventListener('click', Basket.removeGoods)
+
+// сторінка оформлення замволення
+Checkout.reload();
