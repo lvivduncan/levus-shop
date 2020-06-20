@@ -9,8 +9,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// назва сховища
-var BASKET = 'basket'; // клас, що відповідає за кошик на сторінці -- загальна ціна, кількість товарів, товари тощо
+var BASKET = 'basket';
 
 var Basket = /*#__PURE__*/function () {
   function Basket() {
@@ -36,7 +35,7 @@ var Basket = /*#__PURE__*/function () {
     key: "getClear",
     value: function getClear() {
       return document.querySelector('#basket-clear');
-    } // опрацьовуємо дані
+    }
 
   }, {
     key: "viewQuantity",
@@ -58,7 +57,7 @@ var Basket = /*#__PURE__*/function () {
       return Storage.get().reduce(function (sum, item, i) {
         return sum += "<p data-id=\"".concat(i, "\"><i></i><b>").concat(item.name, "</b>, ").concat(item.size, ": ").concat(item.price, ", ").concat(item.number, "</p>");
       }, '');
-    } // видаляємо товари
+    }
 
   }, {
     key: "removeGoods",
@@ -69,7 +68,7 @@ var Basket = /*#__PURE__*/function () {
         Basket.reload();
         Checkout.reload();
       }
-    } // очистка кошика
+    }
 
   }, {
     key: "clearBasket",
@@ -78,12 +77,11 @@ var Basket = /*#__PURE__*/function () {
       Basket.getQuantity().innerHTML = 0;
       Basket.getSum().innerHTML = 0;
       Basket.getGoods().innerHTML = '';
-    } // 1 метод, який оновлює дані у кошикові
+    } 
 
   }, {
     key: "reload",
     value: function reload() {
-      // перевірка чи існує кошик =)
       if (Basket.getQuantity()) {
         if (Storage.has()) {
           Basket.getQuantity().innerHTML = Basket.viewQuantity();
@@ -99,8 +97,7 @@ var Basket = /*#__PURE__*/function () {
   }]);
 
   return Basket;
-}(); // клас, який опрацьовує товари на сторінці
-
+}();
 
 var Items = /*#__PURE__*/function () {
   function Items() {
@@ -115,14 +112,13 @@ var Items = /*#__PURE__*/function () {
   }, {
     key: "toBasket",
     value: function toBasket() {
-      // дані з дата-атрибутів
       var content = {
         name: this.dataset.name,
         size: this.dataset.size,
         price: this.dataset.price,
         number: "1",
         img: this.dataset.img
-      }; // якщо дані вже у сховищі є, тоді додаємо до них. або ж надсилаємо перші
+      };
 
       if (Storage.has()) {
         Storage.add(content);
@@ -135,8 +131,7 @@ var Items = /*#__PURE__*/function () {
   }]);
 
   return Items;
-}(); // localStorage
-
+}();
 
 var Storage = /*#__PURE__*/function () {
   function Storage() {
@@ -145,20 +140,19 @@ var Storage = /*#__PURE__*/function () {
 
   _createClass(Storage, null, [{
     key: "has",
-    // перевірка чи існує сховище
     value: function has() {
       if (localStorage.getItem(BASKET) !== null) {
         return true;
       } else {
         return false;
       }
-    } // отримуємо дані
+    } 
 
   }, {
     key: "get",
     value: function get() {
       return JSON.parse(localStorage.getItem(BASKET));
-    } // надсилаємо дані
+    } 
 
   }, {
     key: "set",
@@ -170,13 +164,12 @@ var Storage = /*#__PURE__*/function () {
         data.push(value);
         localStorage.setItem(BASKET, JSON.stringify(data));
       }
-    } // додаємо дані
+    } 
 
   }, {
     key: "add",
     value: function add(value) {
-      // масив зі сховища
-      var data = JSON.parse(localStorage.getItem(BASKET)); // якщо такий товар уже є, то збільшуємо кількість на 1. або ж просто додаємо новий товар
+      var data = JSON.parse(localStorage.getItem(BASKET));
 
       if (data.find(function (item) {
         return item.name === value.name;
@@ -186,19 +179,17 @@ var Storage = /*#__PURE__*/function () {
         });
         checked.number++;
       } else {
-        // додали дані
         data.push(value);
-      } // повертаємо у сховище оновлений масив
-
+      }
 
       localStorage.setItem(BASKET, JSON.stringify(data));
-    } // очистка сховища
+    } 
 
   }, {
     key: "clear",
     value: function clear() {
       localStorage.clear(BASKET);
-    } // видаляємо товар
+    } 
 
   }, {
     key: "remove",
@@ -215,8 +206,7 @@ var Storage = /*#__PURE__*/function () {
   }]);
 
   return Storage;
-}(); // оформлення замовлення
-
+}();
 
 var Checkout = /*#__PURE__*/function () {
   function Checkout() {
@@ -232,7 +222,7 @@ var Checkout = /*#__PURE__*/function () {
     key: "getOrderSum",
     value: function getOrderSum() {
       return document.querySelector('#order-sum');
-    } // виводимо дані
+    } 
 
   }, {
     key: "viewGoods",
@@ -255,7 +245,7 @@ var Checkout = /*#__PURE__*/function () {
           return sum + +item;
         }, 0);
       }
-    } // метод для роботи з оформленням товарів: видалення і зміна кілкості
+    } 
 
   }, {
     key: "changeGoods",
@@ -275,12 +265,11 @@ var Checkout = /*#__PURE__*/function () {
       Storage.set(data);
       Checkout.reload();
       Basket.reload();
-    } // 1 метод, який оновлює дані 
+    } 
 
   }, {
     key: "reload",
     value: function reload() {
-      // якщо не на сторінці оформлення, щоб не було помилки
       if (Checkout.getOrderGoods() !== null) {
         if (Storage.has()) {
           Checkout.getOrderGoods().innerHTML = Checkout.viewGoods();
@@ -294,20 +283,20 @@ var Checkout = /*#__PURE__*/function () {
   }]);
 
   return Checkout;
-}(); // клік на кнопці "button"
+}();
 
 
 Items.getItems().forEach(function (item) {
   return item.addEventListener('click', Items.toBasket);
-}); // очистити кошик, якщо кнопка очистки існує =)
+}); 
 
-Basket.getClear() && Basket.getClear().addEventListener('click', Basket.clearBasket); // оновлюємо кошик при завантаженні сторінки
+Basket.getClear() && Basket.getClear().addEventListener('click', Basket.clearBasket);
 
-Basket.reload(); // видаляємо товари з кошика
+Basket.reload();
 
-Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGoods); // сторінка оформлення замволення
+Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGoods);
 
-Checkout.reload(); // видаляємо/змінюємо кількість
+Checkout.reload();
 
 Checkout.getOrderGoods().addEventListener('click', function (e) {
   return Checkout.changeGoods(e);
