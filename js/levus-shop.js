@@ -43,6 +43,7 @@ class Basket {
 			Storage.remove(id);
 			Basket.reload();
 			Checkout.reload();
+			Form.reload();
 		}
 	}
 
@@ -50,6 +51,7 @@ class Basket {
 	static clearBasket() {
 		Storage.clear();
 		Checkout.reload();
+		Form.reload();
 		Basket.getQuantity().innerHTML = 0;
 		Basket.getSum().innerHTML = 0;
 		Basket.getGoods().innerHTML = '';
@@ -219,6 +221,7 @@ class Checkout {
 		Storage.set(data);
 		Checkout.reload();
 		Basket.reload();
+		Form.reload();
 	}
 
 	// 1 метод, який оновлює дані 
@@ -228,6 +231,7 @@ class Checkout {
 			if (Storage.has()) {
 				Checkout.getOrderGoods().innerHTML = Checkout.viewGoods();
 				Checkout.getOrderSum().innerHTML = Checkout.viewSum();
+				Form.reload();
 			} else {
 				Checkout.getOrderGoods().innerHTML = '';
 				Checkout.getOrderSum().innerHTML = '';
@@ -235,6 +239,27 @@ class Checkout {
 		}
 	}
 
+}
+
+// форма замовлення
+class Form {
+
+	static reload() {
+		if (document.querySelector('#order-form') !== null) {
+			// якщо у кошикові щось є -- показати форму
+			if (Storage.has()) {
+				document.querySelector('#order-form').innerHTML = `
+					<form>
+						<p><input type="text" placeholder="Ім'я"></p>
+						<p><textarea placeholder="Примітка"></textarea></p>
+						<input type="submit" value="Замовити!">
+					</form>
+				`;
+			} else {
+				document.querySelector('#order-form').innerHTML = '';
+			}
+		}
+	}
 }
 
 // клік на кнопці "button"
@@ -253,4 +278,4 @@ Basket.getGoods() && Basket.getGoods().addEventListener('click', Basket.removeGo
 Checkout.reload();
 
 // видаляємо/змінюємо кількість
-Checkout.getOrderGoods().addEventListener('click', e => Checkout.changeGoods(e));
+Checkout.getOrderGoods() && Checkout.getOrderGoods().addEventListener('click', e => Checkout.changeGoods(e));
